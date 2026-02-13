@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qi Yang | Portfolio</title>
+  <meta name="description" content="Qi Yang — UChicago MPCS. ML / Systems. Portfolio & Notes." />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#11131a;
+      --text:#e8e9ee;
+      --muted:#a7a9b6;
+      --line:rgba(255,255,255,.10);
+      --accent:#c9b27d;   /* champagne gold */
+      --accent2:#8aa6ff;  /* soft blue */
+      --shadow: 0 18px 40px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(138,166,255,.15), transparent 60%),
+                  radial-gradient(900px 500px at 80% 20%, rgba(201,178,125,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:980px; margin:0 auto; padding:56px 20px 70px}
+    .top{
+      display:flex; gap:22px; align-items:center;
+      padding:22px; border:1px solid var(--line);
+      background:rgba(17,19,26,.65);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .avatar{
+        width:110px;
+        height:110px;
+        border-radius: 999px;
+        border:2px solid rgba(201,178,125,.55);
+        box-shadow: 0 10px 25px rgba(0,0,0,.45);
+        overflow:hidden;
+        flex:0 0 auto;
+    }
+    .avatar span{
+      font-weight:700; letter-spacing:.5px;
+      color: rgba(255,255,255,.85);
+    }
+    .title{
+      flex:1;
+      min-width: 0;
+    }
+    h1{
+      margin:0;
+      font-size:34px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .btns{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      transition:.18s ease;
+      font-size:14px;
+      color: rgba(255,255,255,.92);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(201,178,125,.45);
+      background: rgba(201,178,125,.08);
+    }
+    .btn.primary{
+      border-color: rgba(201,178,125,.50);
+      background: linear-gradient(135deg, rgba(201,178,125,.18), rgba(138,166,255,.10));
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201,178,125,.12);
+    }
+
+    .grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      padding:18px 18px 16px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(17,19,26,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+    }
+    .card h2{
+      margin:0 0 8px 0;
+      font-size:16px;
+      letter-spacing:.2px;
+      color: rgba(255,255,255,.92);
+      display:flex; align-items:center; gap:10px;
+    }
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .pill{
+      display:inline-flex; align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+      margin:8px 8px 0 0;
+    }
+
+    .list{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .item{
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      transition:.18s ease;
+    }
+    .item:hover{
+      border-color: rgba(138,166,255,.35);
+      background: rgba(138,166,255,.06);
+      transform: translateY(-1px);
+    }
+    .item .k{
+      font-weight:650;
+      font-size:14px;
+      color: rgba(255,255,255,.92);
+    }
+    .item .v{
+      margin-top:3px;
+      font-size:13px;
+      color: var(--muted);
+    }
+
+    footer{
+      margin-top:18px;
+      color: rgba(167,169,182,.7);
+      font-size:12px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+        <div class="avatar">
+            <img src="photos/avatar.jpg" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+
+      <div class="title">
+        <h1>Qi Yang</h1>
+        <div class="sub">UChicago MPCS · ML / Systems · Chicago</div>
+
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/QiYang-Orbit" target="_blank" rel="noreferrer">
+            <span class="dot"></span> GitHub
+          </a>
+          <a class="btn" href="mailto:yangqee@outlook.com">
+            Contact
+          </a>
+          <a class="btn" href="./il/" >
+            IL Driver License Hub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2><span class="dot"></span> About</h2>
+        <p>
+          I build practical systems and ML tooling. This site is my portfolio + notes.
+          I like clean design, strong execution, and measurable results.
+        </p>
+
+        <div style="margin-top:10px">
+          <span class="pill">Python</span>
+          <span class="pill">Java</span>
+          <span class="pill">Distributed Systems</span>
+          <span class="pill">HPC / MPI / OpenMP</span>
+          <span class="pill">ML Engineering</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span> Highlights</h2>
+        <div class="list">
+          <a class="item" href="https://github.com/QiYang-Orbit/Cloud-Computing-Playbook" target="_blank" rel="noreferrer">
+            <div class="k">Cloud Computing Playbook</div>
+            <div class="v">Docs + implementations from UChicago projects.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Parallel-Programming" target="_blank" rel="noreferrer">
+            <div class="k">Parallel Programming</div>
+            <div class="v">Concurrency patterns & performance notes.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Algorithms" target="_blank" rel="noreferrer">
+            <div class="k">Algorithms</div>
+            <div class="v">Notes, proofs, and practice solutions.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · Built with GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
