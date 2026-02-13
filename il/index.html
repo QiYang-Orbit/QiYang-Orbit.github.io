@@ -1,36 +1,109 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IL Driver License Hub</title>
-  <style>
-    body{font-family:Arial; margin:0; padding:60px 20px; background:#0b0c10; color:#e8e9ee}
-    .wrap{max-width:860px; margin:0 auto}
-    a{color:#e8e9ee; text-decoration:none}
-    .card{border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:18px; margin-top:14px; background:#11131a}
-    .btn{display:inline-block; margin-top:10px; padding:10px 14px; border:1px solid rgba(255,255,255,.12); border-radius:999px}
-    .btn:hover{border-color:rgba(201,178,125,.55)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IL Driver License Study Hub</title>
+
+<style>
+body{
+  margin:0;
+  font-family: system-ui;
+  background:#0f1117;
+  color:#e6e6e6;
+  padding:60px 20px;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:#9ca3af;
+  margin-bottom:40px;
+}
+
+.card{
+  border:1px solid rgba(255,255,255,0.08);
+  background:#161b22;
+  padding:24px;
+  border-radius:14px;
+  margin-bottom:20px;
+  transition:0.2s ease;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:#c9b27d;
+}
+
+.card h2{
+  margin:0 0 8px 0;
+}
+
+.card p{
+  color:#9ca3af;
+  margin:0 0 16px 0;
+}
+
+.button{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.15);
+  text-decoration:none;
+  color:white;
+  font-size:14px;
+}
+
+.button:hover{
+  border-color:#c9b27d;
+}
+
+.progress{
+  margin-top:40px;
+  padding:16px;
+  background:#111418;
+  border-radius:12px;
+  font-size:14px;
+  color:#9ca3af;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>IL Driver License Study Hub</h1>
-    <p>资料页 + 错题页（你自己的学习库）。</p>
+<div class="container">
 
-    <div class="card">
-      <h2>📚 资料页</h2>
-      <p>整理官方手册要点、标志、规则。</p>
-      <a class="btn" href="./materials.html">Open Materials</a>
-    </div>
+<h1>IL Driver License Study Hub</h1>
+<div class="subtitle">Focused. Structured. Efficient.</div>
 
-    <div class="card">
-      <h2>❌ 错题页</h2>
-      <p>错题记录 + 解析 + 高频陷阱。</p>
-      <a class="btn" href="./mistakes.html">Open Mistakes</a>
-    </div>
+<div class="card">
+  <h2>📚 Materials</h2>
+  <p>Official handbook notes & key rules summary.</p>
+  <a class="button" href="./materials.html">Open Materials</a>
+</div>
 
-    <p style="margin-top:22px"><a class="btn" href="../">← Back to Home</a></p>
-  </div>
+<div class="card">
+  <h2>❌ Mistakes</h2>
+  <p>Wrong questions + explanations + traps.</p>
+  <a class="button" href="./mistakes.html">Open Mistakes</a>
+</div>
+
+<div class="progress">
+  Study Plan:
+  <br>1. Traffic Signs
+  <br>2. Right-of-Way Rules
+  <br>3. School Bus & Work Zones
+  <br>4. Practice Tests (80%+ stable)
+</div>
+
+</div>
 </body>
 </html>
