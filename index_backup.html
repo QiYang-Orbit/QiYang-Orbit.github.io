@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qi Yang | Portfolio</title>
+  <meta name="description" content="Qi Yang — UChicago MPCS. ML / Systems. Portfolio & Notes." />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#11131a;
+      --text:#e8e9ee;
+      --muted:#a7a9b6;
+      --line:rgba(255,255,255,.10);
+      --accent:#c9b27d;   /* champagne gold */
+      --accent2:#8aa6ff;  /* soft blue */
+      --shadow: 0 18px 40px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(138,166,255,.15), transparent 60%),
+                  radial-gradient(900px 500px at 80% 20%, rgba(201,178,125,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:980px; margin:0 auto; padding:56px 20px 70px}
+    .top{
+      display:flex; gap:22px; align-items:center;
+      padding:22px; border:1px solid var(--line);
+      background:rgba(17,19,26,.65);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .avatar{
+        width:120px;
+        height:120px;
+        border-radius: 999px;
+        border:2px solid rgba(201,178,125,.55);
+        box-shadow: 0 10px 25px rgba(0,0,0,.45);
+        overflow:hidden;
+        flex:0 0 auto;
+    }
+    .avatar span{
+      font-weight:700; letter-spacing:.5px;
+      color: rgba(255,255,255,.85);
+    }
+    .title{
+      flex:1;
+      min-width: 0;
+    }
+    h1{
+      margin:0;
+      font-size:34px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .btns{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      transition:.18s ease;
+      font-size:14px;
+      color: rgba(255,255,255,.92);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(201,178,125,.45);
+      background: rgba(201,178,125,.08);
+    }
+    .btn.primary{
+      border-color: rgba(201,178,125,.50);
+      background: linear-gradient(135deg, rgba(201,178,125,.18), rgba(138,166,255,.10));
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201,178,125,.12);
+    }
+
+    .grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      padding:18px 18px 16px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(17,19,26,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+    }
+    .card h2{
+      margin:0 0 8px 0;
+      font-size:16px;
+      letter-spacing:.2px;
+      color: rgba(255,255,255,.92);
+      display:flex; align-items:center; gap:10px;
+    }
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .pill{
+      display:inline-flex; align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+      margin:8px 8px 0 0;
+    }
+
+    .list{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .item{
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      transition:.18s ease;
+    }
+    .item:hover{
+      border-color: rgba(138,166,255,.35);
+      background: rgba(138,166,255,.06);
+      transform: translateY(-1px);
+    }
+    .item .k{
+      font-weight:650;
+      font-size:14px;
+      color: rgba(255,255,255,.92);
+    }
+    .item .v{
+      margin-top:3px;
+      font-size:13px;
+      color: var(--muted);
+    }
+
+    /* ======= Centered Timeline (Education left / Work right) ======= */
+    .timeline2{ margin-top:18px; }
+
+    .tcenter{
+      margin-top:14px;
+      position:relative;
+      padding: 10px 0;
+    }
+    .tcenter::before{
+      content:"";
+      position:absolute;
+      left:41%;
+      top:6px;
+      bottom:6px;
+      width:2px;
+      transform: translateX(-1px);
+      background: linear-gradient(to bottom, rgba(201,178,125,.60), rgba(138,166,255,.35));
+      border-radius: 99px;
+      opacity:.85;
+    }
+
+    .tcenter::after{
+      content:"";
+      position:absolute;
+      left:41%;
+      top:6px;
+      bottom:6px;
+      width:10px;
+      transform: translateX(-5px);
+      background: linear-gradient(to bottom, rgba(201,178,125,.18), rgba(138,166,255,.10));
+      filter: blur(6px);
+      opacity:.7;
+      pointer-events:none;
+    }
+
+    .trow{
+      position:relative;
+      display:grid;
+      /* bias space to the right column (work) so long company names look good */
+      grid-template-columns: minmax(0,.80fr) 56px minmax(0,1.20fr);
+      align-items:start;
+      padding: 12px 0;
+    }
+
+    .tleft, .tright{
+      width:100%;
+    }
+
+    /* Make left cards a bit smaller, right cards a bit wider */
+    .trow.left  .tleft  { max-width: 440px; }
+    .trow.right .tright { max-width: 600px; }
+
+    .tnode{
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .tnode::before{
+      content:"";
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      background: var(--bg);
+      border:2px solid rgba(201,178,125,.78);
+      box-shadow: 0 0 0 4px rgba(201,178,125,.14);
+      margin-top: 42px;
+      z-index:2;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      will-change: transform;
+    }
+
+    /* Node glow on hover (row hover is easier than dot hover) */
+    .trow:hover .tnode::before{
+      transform: scale(1.08);
+      border-color: rgba(201,178,125,.95);
+      box-shadow: 0 0 0 4px rgba(201,178,125,.14), 0 0 18px rgba(201,178,125,.22);
+    }
+
+    .tcard{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      padding: 14px 14px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      transition: .18s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    }
+    .tcard:hover{
+      border-color: rgba(201,178,125,.35);
+      background: rgba(201,178,125,.06);
+      transform: translateY(-1px);
+    }
+
+    .tlogo2{
+      width:88px;
+      height:88px;
+      border-radius: 18px;
+      overflow:hidden;
+      border:none;              /* no outer frame */
+      background: transparent;  /* no tile background */
+      box-shadow: none;         /* no tile shadow */
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .tlogo2 img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:6px;      /* slightly less padding so the mark looks bigger */
+      opacity:.98;
+    }
+
+    /* White backing for logos that rely on transparency (keeps original colors) */
+    .tlogo2.bgwhite{
+      background: rgba(255,255,255,.92);
+      border-radius: 18px;
+    }
+
+    /* Circular logo wrapper (no square tile) */
+    .tlogo2.circle{
+      border-radius: 999px;
+    }
+
+    /* White circle backing (useful for seals with transparency) */
+    .tlogo2.circle.bgwhite{
+      background: rgba(255,255,255,.96);
+      border-radius: 999px;
+    }
+
+    /* Make circular logos read larger */
+    .tlogo2.circle img{
+      padding: 8px;
+    }
+
+    /* Tencent: slightly bigger + a touch lower in the circle */
+    .tlogo2.tencent img{
+      padding: 6px;
+      transform: translateY(2px) scale(1);
+      transform-origin: center;
+    }
+
+    /* ECNU seal: no extra white ring; crop to the outer red ring */
+    .tlogo2.ecnu img{
+      padding: 0;
+      object-fit: cover;
+      transform: scale(1.014);
+      transform-origin: center;
+    }
+
+    /* Tighten/crop logos that have too much transparent whitespace */
+    .tlogo2.tight img{
+      padding: 0;
+      object-fit: cover;   /* crops the empty edges so the mark reads larger */
+    }
+
+    /* Make SAIC visually larger inside its white tile (no hard crop) */
+    .tlogo2.saic img{
+      object-fit: contain;
+      padding: 0;
+      transform: scale(1.56);
+      transform-origin: center;
+    }
+
+    /* UChicago shield often benefits from a slight tighten */
+    .tlogo2.uchicago img{
+      padding: 0;
+      transform: scale(1.2);
+      transform-origin: center;
+    }
+
+
+    .ttext{ min-width:0; }
+    .twhen2{
+      font-size:12px;
+      color: rgba(167,169,182,.85);
+      letter-spacing:.2px;
+      white-space: nowrap;
+    }
+
+    /* Bigger + bolder org name */
+    .torg2{
+      margin-top:4px;
+      font-weight:800;
+      font-size:15px;
+      color: rgba(255,255,255,.94);
+      letter-spacing:.2px;
+      line-height:1.25;
+    }
+    .trole2{
+      margin-top:4px;
+      font-weight:650;
+      font-size:14px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .tloc2{
+      margin-top:8px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size:12px;
+      color: rgba(167,169,182,.90);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      padding:6px 10px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+    .tnote2{ margin-top:10px; font-size:13px; color: var(--muted); }
+
+    /* Place cards left/right */
+    .trow.left  .tleft  { justify-self:end; }
+    .trow.right .tright { justify-self:start; }
+
+    /* IMPORTANT: keep placeholders in the grid so columns don't collapse */
+    .trow.left  .tright,
+    .trow.right .tleft{
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .trow.right .tright{ padding-left: 6px; }
+    .trow.left  .tleft { padding-right: 6px; }
+
+    /* Scroll reveal (directional) */
+    .reveal{
+      opacity:0;
+      filter: blur(2px);
+      transition: opacity .55s ease, transform .55s ease, filter .55s ease;
+      will-change: transform;
+    }
+    .trow.left  .reveal{ transform: translateX(-18px); }
+    .trow.right .reveal{ transform: translateX(18px); }
+    .reveal.show{ opacity:1; transform: translateX(0); filter:none; }
+
+    @media (max-width: 860px){
+      .tcenter::before{ left:20px; transform:none; }
+      .tcenter::after{ left:20px; transform:none; }
+      .trow{ grid-template-columns: 40px 1fr; }
+      .tnode{ justify-content:flex-start; }
+      .tnode::before{ margin-top: 36px; }
+      .trow.left .tleft,
+      .trow.right .tright{ display:block; justify-self:stretch; }
+      .trow.left .tright,
+      .trow.right .tleft{ display:none; }
+      .tlogo2{ width:78px; height:78px; border-radius: 16px; }
+    }
+
+    /* Floating mini album button (bottom-right) */
+    .album-fab{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:54px;
+      height:54px;
+      border-radius: 16px;
+      border:1px solid rgba(201,178,125,.28);
+      background: rgba(17,19,26,.72);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      z-index: 999;
+      transition: .18s ease;
+    }
+    .album-fab:hover{
+      transform: translateY(-2px);
+      border-color: rgba(201,178,125,.55);
+      background: rgba(201,178,125,.10);
+    }
+    .album-fab img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity: .92;
+      transition: transform .45s ease, opacity .18s ease;
+    }
+    .album-fab:hover img{
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    .album-fab::after{
+      content:"Album";
+      position:absolute;
+      right:60px;
+      bottom:50%;
+      transform: translateY(50%);
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(17,19,26,.78);
+      color: rgba(255,255,255,.88);
+      font-size:12px;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      opacity:0;
+      pointer-events:none;
+      transition:.18s ease;
+    }
+    .album-fab:hover::after{
+      opacity:1;
+      right:66px;
+    }
+
+    /* Keep it away from mobile browser UI */
+    @media (max-width: 860px){
+      .album-fab{ right:14px; bottom:14px; width:50px; height:50px; border-radius: 14px; }
+    }
+
+    footer{
+      margin-top:18px;
+      color: rgba(167,169,182,.7);
+      font-size:12px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+        <div class="avatar">
+            <img src="photos/avatar.jpg" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+
+      <div class="title">
+        <h1>Qi Yang</h1>
+        <div class="sub">UChicago MPCS · ML / Systems · Chicago</div>
+
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/QiYang-Orbit" target="_blank" rel="noreferrer">
+            <span class="dot"></span> GitHub
+          </a>
+          <a class="btn" href="mailto:yangqee@outlook.com">
+            Contact
+          </a>
+          <a class="btn" href="./il/" >
+            IL Driver License Hub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2><span class="dot"></span> About</h2>
+        <p>
+          I build practical systems and ML tooling. This site is my portfolio + notes.
+          I like clean design, strong execution, and measurable results.
+        </p>
+
+        <div style="margin-top:10px">
+          <span class="pill">Python</span>
+          <span class="pill">Java</span>
+          <span class="pill">Distributed Systems</span>
+          <span class="pill">HPC / MPI / OpenMP</span>
+          <span class="pill">ML Engineering</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span> Highlights</h2>
+        <div class="list">
+          <a class="item" href="https://github.com/QiYang-Orbit/Cloud-Computing-Playbook" target="_blank" rel="noreferrer">
+            <div class="k">Cloud Computing Playbook</div>
+            <div class="v">Docs + implementations from UChicago projects.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Parallel-Programming" target="_blank" rel="noreferrer">
+            <div class="k">Parallel Programming</div>
+            <div class="v">Concurrency patterns & performance notes.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Algorithms" target="_blank" rel="noreferrer">
+            <div class="k">Algorithms</div>
+            <div class="v">Notes, proofs, and practice solutions.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card timeline2">
+      <h2><span class="dot"></span> Experience</h2>
+
+      <div class="tcenter">
+        <!-- Education (left) -->
+        <div class="trow left">
+          <div class="tleft reveal">
+            <div class="tcard">
+              <div class="tlogo2 tight uchicago"><img src="logos/uchicago.png" alt="UChicago"></div>
+              <div class="ttext">
+                <div class="twhen2">2024 — Present</div>
+                <div class="torg2">The University of Chicago</div>
+                <div class="trole2">Master of Computer Science</div>
+                <div class="tloc2">Chicago, IL</div>
+              </div>
+            </div>
+          </div>
+          <div class="tnode"></div>
+          <div class="tright"></div>
+        </div>
+
+        <!-- Work (right) -->
+        <div class="trow right">
+          <div class="tleft"></div>
+          <div class="tnode"></div>
+          <div class="tright reveal">
+            <div class="tcard">
+              <div class="tlogo2 bgwhite saic"><img src="logos/saic.png" alt="SAIC Motor"></div>
+              <div class="ttext">
+                <div class="twhen2">2021 — 2024</div>
+                <div class="torg2">SAIC Motor Passenger Vehicle<br>Co., Ltd.</div>
+                <div class="trole2">Backend Development Engineer<br>(Java, Python)</div>
+                <div class="tloc2">Shanghai, China</div>
+                <div class="tnote2">Fortune Global 500 · China’s largest automotive manufacturer.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Work (right) -->
+        <div class="trow right">
+          <div class="tleft"></div>
+          <div class="tnode"></div>
+          <div class="tright reveal">
+            <div class="tcard">
+              <div class="tlogo2 circle bgwhite tencent"><img src="logos/tencent.png" alt="Tencent"></div>
+              <div class="ttext">
+                <div class="twhen2">2020</div>
+                <div class="torg2">Tencent Technology (Shanghai) Co., Ltd.</div>
+                <div class="trole2">Software Development Intern (Java)</div>
+                <div class="tloc2">Shanghai, China</div>
+                <div class="tnote2">One of the world’s largest video game vendors and among the largest social media companies.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education (left) -->
+        <div class="trow left">
+          <div class="tleft reveal">
+            <div class="tcard">
+              <div class="tlogo2 circle bgwhite ecnu"><img src="logos/ecnu.png" alt="ECNU"></div>
+              <div class="ttext">
+                <div class="twhen2">2018 — 2021</div>
+                <div class="torg2">East China Normal University</div>
+                <div class="trole2">Software Engineering</div>
+                <div class="tloc2">Shanghai, China</div>
+              </div>
+            </div>
+          </div>
+          <div class="tnode"></div>
+          <div class="tright"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · Built with GitHub Pages
+    </footer>
+
+    <a class="album-fab" href="./album.html" aria-label="Photo album">
+      <img src="photos/album/01.jpg" alt="Album preview">
+    </a>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Scroll reveal for timeline cards
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.classList.add('show');
+      }
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
