@@ -1,14 +1,3 @@
-/*
-  ============================
-  内联脚本（Inline JS）说明
-  - 你现在可以先保持单文件可运行（最稳）
-  - 我已在 <head> 里加了 `assets/main.js` 的引用，未来你想拆分时：
-    1) 新建 assets/main.js
-    2) 把本 <script> 里的内容整体复制进去
-    3) 确认外链生效后，再删除本 <script>
-  ============================
-*/
-
 // ========== 0) 页脚年份自动更新 ==========
 document.getElementById("y").textContent = new Date().getFullYear();
 
