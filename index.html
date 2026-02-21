@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qi Yang | Portfolio</title>
+  <meta name="description" content="Qi Yang — UChicago MPCS. ML / Systems. Portfolio & Notes." />
+  <!-- ✅ 便于后期迭代：优先加载外部 CSS/JS（如果文件不存在会自动回退到本页内联版本） -->
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/main.js"></script>
+
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="avatar">
+        <img src="photos/avatar.jpg" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+
+      <div class="title">
+        <h1>Qi Yang</h1>
+        <div class="sub">UChicago MPCS · ML / Systems · Chicago</div>
+
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/QiYang-Orbit" target="_blank" rel="noreferrer">
+            <span class="dot"></span> GitHub
+          </a>
+          <a class="btn" href="mailto:yangqee@outlook.com">
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2><span class="dot"></span> About</h2>
+        <p>
+          I build practical systems and ML tooling. This site is my portfolio + notes.
+          I like clean design, strong execution, and measurable results.
+        </p>
+
+        <div style="margin-top:10px">
+          <span class="pill">Python</span>
+          <span class="pill">Java</span>
+          <span class="pill">Distributed Systems</span>
+          <span class="pill">HPC / MPI / OpenMP</span>
+          <span class="pill">ML Engineering</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span> Highlights</h2>
+        <div class="list">
+          <a class="item" href="https://github.com/QiYang-Orbit/Cloud-Computing-Playbook" target="_blank" rel="noreferrer">
+            <div class="k">Cloud Computing Playbook</div>
+            <div class="v">Docs + implementations from UChicago projects.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Parallel-Programming" target="_blank" rel="noreferrer">
+            <div class="k">Parallel Programming</div>
+            <div class="v">Concurrency patterns & performance notes.</div>
+          </a>
+          <a class="item" href="https://github.com/QiYang-Orbit/Algorithms" target="_blank" rel="noreferrer">
+            <div class="k">Algorithms</div>
+            <div class="v">Notes, proofs, and practice solutions.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card timeline2">
+      <h2><span class="dot"></span> Experience</h2>
+
+      <div class="tcenter">
+        <div class="trow">
+          <div class="tyear">2024 — Present</div>
+          <div class="tnode"></div>
+          <div class="tcontent reveal">
+            <div class="tcard">
+              <div class="tlogo2 tight uchicago"><img src="logos/uchicago.png" alt="UChicago"></div>
+              <div class="ttext">
+                <div class="torg2">The University of Chicago</div>
+                <div class="trole2">Master of Computer Science</div>
+                <div class="tloc2">Chicago, IL</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trow">
+          <div class="tyear">2021 — 2024</div>
+          <div class="tnode"></div>
+          <div class="tcontent reveal">
+            <div class="tcard">
+              <div class="tlogo2 bgwhite saic"><img src="logos/saic.png" alt="SAIC Motor"></div>
+              <div class="ttext">
+                <div class="torg2">SAIC Motor Passenger Vehicle Co., Ltd.</div>
+                <div class="trole2">Backend Development Engineer (Java, Python)</div>
+                <div class="tloc2">Shanghai, China</div>
+                <div class="tnote2">Fortune Global 500 · China’s largest automotive manufacturer.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trow">
+          <div class="tyear">2020</div>
+          <div class="tnode"></div>
+          <div class="tcontent reveal">
+            <div class="tcard">
+              <div class="tlogo2 circle bgwhite tencent"><img src="logos/tencent.png" alt="Tencent"></div>
+              <div class="ttext">
+                <div class="torg2">Tencent Technology (Shanghai) Co., Ltd.</div>
+                <div class="trole2">Software Development Intern (Java)</div>
+                <div class="tloc2">Shanghai, China</div>
+                <div class="tnote2">One of the world’s largest video game vendors and among the largest social media companies.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trow">
+          <div class="tyear">2018 — 2021</div>
+          <div class="tnode"></div>
+          <div class="tcontent reveal">
+            <div class="tcard">
+              <div class="tlogo2 circle bgwhite ecnu"><img src="logos/ecnu.png" alt="ECNU"></div>
+              <div class="ttext">
+                <div class="torg2">East China Normal University</div>
+                <div class="trole2">Software Engineering</div>
+                <div class="tloc2">Shanghai, China</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · Built with GitHub Pages
+    </footer>
+
+    <!-- New Year 2026 Easter Egg -->
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+    <div class="ny-toast" id="nyToast" aria-live="polite">
+      <div class="ny-left">
+        <div class="ny-kicker"><span class="spark"></span> Earth Online · Season 2026</div>
+        <div class="ny-text" id="nyText">恭喜进入地球 Online 2026 新赛季 ✨</div>
+      </div>
+      <div class="ny-actions">
+        <button class="ny-mini primary" id="nySpark" type="button">✨</button>
+        <button class="ny-mini" id="nyCopy" type="button">Copy</button>
+        <button class="ny-mini ny-x" id="nyClose" type="button" aria-label="Close">×</button>
+      </div>
+    </div>
+
+    <!-- Utilities Dock (minimal tools access) -->
+    <div class="udock" id="udock" aria-label="Utilities">
+      <div class="udock-actions" id="udockActions">
+        <a class="udock-btn" href="./il/" data-tip="Driver License Hub" aria-label="Driver License Hub">
+          <!-- steering wheel icon (inline SVG, no downloads needed) -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9Z" stroke="rgba(255,255,255,.88)" stroke-width="1.6"/>
+            <path d="M5.6 10.2c1.9 0 3.2.7 4.1 1.6 1 .9 2.5.9 3.5 0 .9-.9 2.2-1.6 4.1-1.6" stroke="rgba(255,255,255,.72)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M12 12v6" stroke="rgba(255,255,255,.72)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M9.6 18.4c.6.4 1.5.6 2.4.6s1.8-.2 2.4-.6" stroke="rgba(255,255,255,.72)" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="1.6" fill="rgba(201,178,125,.95)"/>
+          </svg>
+        </a>
+
+        <a class="udock-btn" href="./album.html" data-tip="Album" aria-label="Album">
+          <!-- camera icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8.2 7.6 9.6 6h4.8l1.4 1.6H19c1.1 0 2 .9 2 2v8.6c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V9.6c0-1.1.9-2 2-2h3.2Z" stroke="rgba(255,255,255,.88)" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M12 17.3a3.6 3.6 0 1 0 0-7.2 3.6 3.6 0 0 0 0 7.2Z" stroke="rgba(255,255,255,.72)" stroke-width="1.6"/>
+            <circle cx="18" cy="10" r="1" fill="rgba(201,178,125,.95)"/>
+          </svg>
+        </a>
+      </div>
+
+      <button class="udock-btn udock-toggle" id="udockToggle" type="button" aria-label="Open utilities">
+        <!-- grid icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7 7h3v3H7V7Zm7 0h3v3h-3V7ZM7 14h3v3H7v-3Zm7 0h3v3h-3v-3Z" fill="rgba(255,255,255,.88)"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</body>
+</html>
