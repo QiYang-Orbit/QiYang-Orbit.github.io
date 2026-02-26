@@ -23,7 +23,7 @@ What: Model serving system turns a trained model into an online service that use
 Solve: solves how to serve predictions reliably with low latency and high concurrency.  
 Includes:  
 - Model loader  
-- API server  
+- API server (FastAPI, Flask)
 - Inference execution  
 - Logging & Monitoring  
 - Containerization(Docker)  
