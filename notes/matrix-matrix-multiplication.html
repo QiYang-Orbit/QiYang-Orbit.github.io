@@ -22,41 +22,159 @@
     </div>
 
     <div class="card">
-      <h2>1. Problem Setup</h2>
+      <h2>概览</h2>
       <p>
-        We consider a fully connected layer with input batch X ∈ ℝ<sup>B×d_in</sup> and weights
-        W ∈ ℝ<sup>d_in×d_out</sup>, producing activations Y = XW. This note focuses on how this
-        matrix–matrix multiplication appears in forward and backward passes of neural network
-        training, and what the shape conventions imply in practice.
+        Training deep neural networks involves repeated matrix–matrix multiplications。
+        你训练一个神经网络时，90% 时间都花在 GEMM（矩阵乘）上
+        （GEneral Matrix Multiplication，完整定义是 C = αAB + βC，而不是常规的 C = AB）。
+        这篇笔记从一个最简单的全连接网络出发，解释这些矩阵乘在 forward / backward 中是如何出现的。
       </p>
 
-      <h2>2. Forward: GEMM View</h2>
+      <h2>1. 一个最简单的全连接网络</h2>
+      <p><strong>假设：</strong></p>
+      <ul>
+        <li>输入图片是 784 维（28×28 MNIST）</li>
+        <li>第一层 256 个神经元</li>
+        <li>第二层 128 个神经元</li>
+        <li>输出层 10 类</li>
+      </ul>
+      <p>第一层的计算：</p>
+      <pre><code class="language-python">Z1 = X · W1 + b1</code></pre>
+      <table>
+        <thead>
+          <tr>
+            <th>符号</th>
+            <th>维度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>X</td>
+            <td>(batch_size × 784)</td>
+          </tr>
+          <tr>
+            <td>W1</td>
+            <td>(784 × 256)（每个 neuron 都要看全部 784 个输入做加权求和，一共有 256 个神经元）</td>
+          </tr>
+          <tr>
+            <td>Z1</td>
+            <td>(batch_size × 256)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>这是标准的矩阵乘（GEMM）。</p>
+
+      <h2>2. Major operations</h2>
+
+      <h3>▶ Forward pass: Compute activations</h3>
+      <p>Forward 过程可以写成：</p>
+      <pre><code class="language-python">Z1 = XW1
+A1 = activation(Z1)
+
+Z2 = A1W2
+A2 = activation(Z2)
+
+Z3 = A2W3
+Output = softmax(Z3)</code></pre>
       <p>
-        In most deep learning frameworks, the forward pass of a dense layer is implemented as a
-        general matrix–matrix multiplication (GEMM). The batch dimension B is treated as the
-        number of rows, while d_in and d_out correspond to input and output feature dimensions.
-        Efficient kernels fuse bias addition and activation where possible.
+        每一层都是“上一层输出 × 权重矩阵”，所以每一层对应一次 GEMM。
+        如果有 3 层，forward 就有 3 次矩阵乘。
       </p>
 
-      <h2>3. Backprop: dL/dW and dL/dX</h2>
+      <h3>▶ Backward pass: Compute gradients</h3>
+      <p><strong>1️⃣ 权重梯度</strong>：反向传播本质是求梯度，核心公式之一是：</p>
+      <pre><code class="language-python">dW = A^T · dZ</code></pre>
+      <pre><code>(batch × hidden)^T × (batch × next)
+= (hidden × batch) × (batch × next)
+= (hidden × next)</code></pre>
+      <p>本质上又是一次矩阵乘。</p>
+      <p><strong>2️⃣ 误差传播</strong>：</p>
+      <pre><code class="language-python">dZ_prev = dZ · W^T</code></pre>
+      <p>同样是矩阵乘。</p>
+
       <p>
-        Given upstream gradient dL/dY, gradients with respect to W and X can be written as:
+        综上：Forward 每层 1 次 GEMM，Backward 每层 2 次 GEMM。
+        如果有 L 层，每个 epoch ≈ 3L 次 GEMM，再乘上 batch 数量。
+        这就是为什么 80%–95% 的时间都花在 GEMM 上。
+      </p>
+
+      <h3>▶ Weight update: Apply gradient descent</h3>
+      <p>在得到梯度之后，再做参数更新（SGD / Adam 等），这里通常是逐元素运算，相比 GEMM 耗时较少。</p>
+
+      <h2>3. 修改成 matrix–matrix formulation</h2>
+      <p>最基础、直观但低效的实现是逐样本三重循环：</p>
+      <pre><code class="language-python">for sample:
+    for neuron:
+        for input:
+            ...</code></pre>
+      <p>这是“逐样本计算”。高性能实现会改成一次处理整个 batch：</p>
+      <pre><code>X(batch × input) × W(input × output)</code></pre>
+      <p>真正变成一个大的 GEMM 调用，让底层库（如 BLAS/cuBLAS）来吃掉主要计算。</p>
+
+      <h2>4. BLAS 与高性能 GEMM</h2>
+      <p>
+        <strong>BLAS (Basic Linear Algebra Subprograms)</strong> 提供高度优化的线性代数算子。
+        典型的单精度矩阵乘接口是 <code>cblas_sgemm(...)</code>。
+      </p>
+      <p>内部会做很多优化：</p>
+      <ul>
+        <li>tiling（分块）</li>
+        <li>cache blocking</li>
+        <li>loop unrolling</li>
+        <li>SIMD 向量化</li>
+        <li>OpenMP 并行</li>
+        <li>针对具体 CPU 指令集优化</li>
+      </ul>
+      <p>手写三重循环几乎不可能比这些库更快。</p>
+
+      <h2>5. 形状示例：为什么是矩阵乘</h2>
+      <p>
+        神经网络训练时，我们不是一次处理一个样本，而是一次处理一整个 batch。
+        假设：
       </p>
       <ul>
-        <li>dL/dW = X<sup>T</sup>(dL/dY)</li>
-        <li>dL/dX = (dL/dY)W<sup>T</sup></li>
+        <li>batch = 256</li>
+        <li>input = 784</li>
+        <li>hidden = 128</li>
+      </ul>
+      <p>则：</p>
+      <ul>
+        <li>输入矩阵 X 的维度 = (batch × input) = (256 × 784)</li>
+        <li>权重矩阵 W 的维度 = (input × hidden) = (784 × 128)</li>
+      </ul>
+      <p>矩阵乘规则：</p>
+      <pre><code>(256 × 784) × (784 × 128)</code></pre>
+      <p>中间 784 抵消，得到：</p>
+      <pre><code>Z = (256 × 128)</code></pre>
+      <p>也就是 (batch × hidden)。</p>
+
+      <h2>6. Tensor Cores 与 fused GEMM</h2>
+      <p><strong>Tensor Core 做的不是普通乘法。</strong></p>
+      <p>它计算的是：</p>
+      <pre><code>D = A × B + C</code></pre>
+      <p>
+        不是只算 <code>A × B</code>，而是乘完直接加上 <code>C</code>（fused operation）。
+        如果分步做：
+      </p>
+      <ol>
+        <li>先算 <code>A × B</code></li>
+        <li>再加 <code>C</code></li>
+      </ol>
+      <p>需要：</p>
+      <ul>
+        <li>多一次读写显存</li>
+        <li>多一次寄存器存储</li>
       </ul>
       <p>
-        Both expressions are again matrix–matrix multiplications, which means backprop reuses the
-        same GEMM primitives as the forward pass, just with transposed operands and different
-        shape conventions.
+        Tensor Core 把它合成一次硬件操作完成，减少数据搬运，从而显著加速矩阵乘相关的计算。
       </p>
 
-      <h2>4. Implementation Notes</h2>
+      <h2>7. 总结</h2>
       <ul>
-        <li>Be explicit about shape conventions (batch-first vs feature-first) to avoid silent broadcasting bugs.</li>
-        <li>On GPU, cuBLAS and cuDNN provide optimized GEMM kernels that dominate the runtime of dense layers.</li>
-        <li>Micro-batching and mixed precision (FP16/BF16) can significantly change the optimal tiling strategy.</li>
+        <li>Matrix–matrix multiplications (GEMMs) 主导了深度学习的大部分计算。</li>
+        <li>Tensor Cores 提供高效的混合精度矩阵运算。</li>
+        <li>结合 cuBLAS 等优化库使用 Tensor Cores，可以显著加速训练与推理。</li>
+        <li>高效实现（如 BLAS、cuBLAS、Tensor Cores）对高性能训练至关重要。</li>
       </ul>
     </div>
 
