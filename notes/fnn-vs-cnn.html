@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FNN vs. CNN 概述 | ML Notes</title>
+  <meta name="description" content="High-level overview of feedforward neural networks (FNN) vs convolutional neural networks (CNN), and when to use each." />
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h1>FNN vs. CNN 概述</h1>
+        <div class="sub">
+          Updated 2026-02-26 · ML Notes
+        </div>
+        <div class="btns">
+          <a class="btn" href="/notes/">← All Notes</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>一、什么是 FNN？</h2>
+      <p>
+        <strong>FNN (Feedforward Neural Network, 前馈神经网络)</strong>，也常被称为
+        Fully Connected Network、Dense Neural Network 或 MLP（Multi-Layer Perceptron）。
+      </p>
+      <p>
+        <img src="./MLPics/DFF.png" alt="FNN 结构示意图" style="max-width:100%;height:auto;">
+      </p>
+      <p><strong>特点：</strong></p>
+      <ul>
+        <li>每一层的每个神经元都和下一层所有神经元连接</li>
+        <li>数据从左往右单向传播</li>
+        <li>不存在“局部连接”</li>
+        <li>不共享参数</li>
+      </ul>
+      <p><strong>数学本质：</strong></p>
+      <p>每一层的变换可以写成：</p>
+      <pre><code>y = f(Wx + b)</code></pre>
+      <p>即：矩阵乘法 + 激活函数。</p>
+
+      <h2>二、什么是 CNN？</h2>
+      <p>
+        <strong>CNN (Convolutional Neural Network, 卷积神经网络)</strong> 最初为图像处理设计。
+      </p>
+      <p>
+        <img src="./MLPics/CNN.png" alt="CNN 结构示意图" style="max-width:100%;height:auto;">
+      </p>
+      <p><strong>核心区别：</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>FNN</th>
+            <th>CNN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>全连接</td>
+            <td>局部连接</td>
+          </tr>
+          <tr>
+            <td>参数多</td>
+            <td>参数少</td>
+          </tr>
+          <tr>
+            <td>不考虑空间结构</td>
+            <td>保留空间结构</td>
+          </tr>
+          <tr>
+            <td>适合 tabular 数据</td>
+            <td>适合图像</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>关键结构：</strong></p>
+      <ul>
+        <li>Convolution layer（卷积层）</li>
+        <li>Kernel / Filter（卷积核）</li>
+        <li>Pooling（池化）</li>
+        <li>参数共享</li>
+      </ul>
+      <p>CNN 通过“局部像素相关性”提取空间结构信息。</p>
+
+      <h2>三、FNN vs CNN 本质区别</h2>
+      <p><strong>一句话总结：</strong></p>
+      <ul>
+        <li><strong>FNN</strong> 把图片当成一串数字</li>
+        <li><strong>CNN</strong> 把图片当成有空间结构的数据</li>
+      </ul>
+      <p>
+        举例：一个 28×28 的图片，
+        FNN 会将其拉平成 784 维向量，而 CNN 会保留 28×28 的二维结构。
+      </p>
+      <p>这导致：</p>
+      <ul>
+        <li>FNN 在图像任务上效果一般</li>
+        <li>CNN 在图像任务上表现更优</li>
+      </ul>
+
+      <h2>四、什么是 Inference（推理/预测）？</h2>
+      <p>机器学习通常分为两个阶段：</p>
+      <ol>
+        <li>
+          <strong>Training（训练）</strong>：用数据、计算 loss、反向传播并更新参数。
+        </li>
+        <li>
+          <strong>Inference（推理）</strong>：不更新参数，只做前向传播，输出预测结果。
+        </li>
+      </ol>
+      <p>比如：</p>
+      <ul>
+        <li>用 MNIST 训练模型 → Training</li>
+        <li>用训练好的模型预测新手写数字 → Inference</li>
+      </ul>
+      <p>公式视角：</p>
+      <ul>
+        <li>Training = forward + backward</li>
+        <li>Inference = forward only</li>
+      </ul>
+      <p>
+        在工业场景中：训练通常只做一次，而推理可能会被调用数十亿次。
+      </p>
+
+      <h2>五、什么是 Tabular 数据？</h2>
+      <p>
+        Tabular 指<strong>表格型数据</strong>（如 Excel）。每列为一个特征（feature），每行为一个样本（sample），
+        特征之间没有空间关系。
+      </p>
+      <p>示例表格：</p>
+      <table>
+        <thead>
+          <tr>
+            <th>age</th>
+            <th>income</th>
+            <th>height</th>
+            <th>gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>25</td>
+            <td>50000</td>
+            <td>170</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>30</td>
+            <td>80000</td>
+            <td>180</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>特点：</strong></p>
+      <ul>
+        <li>每列为一个特征（feature）</li>
+        <li>每行为一个样本（sample）</li>
+        <li>特征间没有空间关系</li>
+        <li>列与列之间仅有“逻辑关系”，无“位置关系”</li>
+      </ul>
+      <p><strong>常见场景：</strong></p>
+      <ul>
+        <li>金融风控</li>
+        <li>医疗预测</li>
+        <li>用户流失预测</li>
+        <li>推荐系统特征</li>
+      </ul>
+
+      <h2>六、什么是图像数据？</h2>
+      <p>
+        图像不是表格，而是有空间结构的二维/三维张量。比如 28×28 的灰度图，
+        可以表示为 X ∈ ℝ<sup>28×28</sup>。
+      </p>
+      <p><strong>关键区别：</strong></p>
+      <ul>
+        <li>每个像素与周围像素强相关</li>
+        <li>上下左右位置有意义</li>
+        <li>平移图片不应改变内容本质</li>
+      </ul>
+
+      <h2>七、本质区别：结构性</h2>
+      <ul>
+        <li>
+          <strong>Tabular 数据</strong>：特征无序。即使交换 income 和 height 的列顺序，只要权重对应调整，
+          模型不会变，没有“空间邻接”概念。
+        </li>
+        <li>
+          <strong>图像数据</strong>：像素有位置关系。随机打乱像素，CNN 的效果会崩溃。
+          图像关键信息在于局部模式和空间结构。
+        </li>
+      </ul>
+
+      <h2>八、模型选择</h2>
+      <h3>为什么 FNN 更适合 Tabular？</h3>
+      <ul>
+        <li>FNN 的假设：各特征独立输入，没有局部关系，不共享参数。</li>
+        <li>这与 tabular 数据的结构高度匹配。</li>
+      </ul>
+      <h3>为什么 CNN 更适合图像？</h3>
+      <ul>
+        <li>CNN 做局部卷积和参数共享，并具有平移不变性。</li>
+        <li>例如边缘检测，一个 filter 可以在图像的任意位置复用。</li>
+      </ul>
+
+      <h2>九、简要总结</h2>
+      <ul>
+        <li><strong>Tabular</strong>：特征是抽象属性，无空间含义。</li>
+        <li><strong>Image</strong>：特征是像素，空间结构本身就是关键信息。</li>
+      </ul>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · ML Notes
+    </footer>
+  </div>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

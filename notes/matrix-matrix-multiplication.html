@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrix–Matrix Multiplication in Neural Network Training | ML Notes</title>
+  <meta name="description" content="Matrix–matrix multiplication in neural network training: forward, backward, and implementation details." />
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h1>Matrix–Matrix Multiplication in Neural Network Training</h1>
+        <div class="sub">
+          Updated 2026-03-03 · ML Notes
+        </div>
+        <div class="btns">
+          <a class="btn" href="/notes/">← All Notes</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. Problem Setup</h2>
+      <p>
+        We consider a fully connected layer with input batch X ∈ ℝ<sup>B×d_in</sup> and weights
+        W ∈ ℝ<sup>d_in×d_out</sup>, producing activations Y = XW. This note focuses on how this
+        matrix–matrix multiplication appears in forward and backward passes of neural network
+        training, and what the shape conventions imply in practice.
+      </p>
+
+      <h2>2. Forward: GEMM View</h2>
+      <p>
+        In most deep learning frameworks, the forward pass of a dense layer is implemented as a
+        general matrix–matrix multiplication (GEMM). The batch dimension B is treated as the
+        number of rows, while d_in and d_out correspond to input and output feature dimensions.
+        Efficient kernels fuse bias addition and activation where possible.
+      </p>
+
+      <h2>3. Backprop: dL/dW and dL/dX</h2>
+      <p>
+        Given upstream gradient dL/dY, gradients with respect to W and X can be written as:
+      </p>
+      <ul>
+        <li>dL/dW = X<sup>T</sup>(dL/dY)</li>
+        <li>dL/dX = (dL/dY)W<sup>T</sup></li>
+      </ul>
+      <p>
+        Both expressions are again matrix–matrix multiplications, which means backprop reuses the
+        same GEMM primitives as the forward pass, just with transposed operands and different
+        shape conventions.
+      </p>
+
+      <h2>4. Implementation Notes</h2>
+      <ul>
+        <li>Be explicit about shape conventions (batch-first vs feature-first) to avoid silent broadcasting bugs.</li>
+        <li>On GPU, cuBLAS and cuDNN provide optimized GEMM kernels that dominate the runtime of dense layers.</li>
+        <li>Micro-batching and mixed precision (FP16/BF16) can significantly change the optimal tiling strategy.</li>
+      </ul>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · ML Notes
+    </footer>
+  </div>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

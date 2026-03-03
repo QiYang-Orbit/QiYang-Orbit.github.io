@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ML Notes | Qi Yang</title>
+  <meta name="description" content="Machine learning notes by Qi Yang." />
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h1>ML Notes</h1>
+        <div class="sub">Concepts, derivations, and implementation details.</div>
+        <div class="btns">
+          <a class="btn" href="/">← Back to Portfolio</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2><span class="dot"></span> Latest Notes</h2>
+        <div class="list">
+          <a class="item" href="./matrix-matrix-multiplication.html">
+            <div class="k">Matrix–Matrix Multiplication in Neural Network Training</div>
+            <div class="v">From naive loops to batched GEMM, and why shapes matter.</div>
+          </a>
+          <a class="item" href="./fnn-vs-cnn.html">
+            <div class="k">FNN vs. CNN 概述</div>
+            <div class="v">When to use feedforward networks vs. convolutional networks for tabular and image data.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Qi Yang · ML Notes
+    </footer>
+  </div>
+  <script>
+    // Match the home page behavior: fill current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
