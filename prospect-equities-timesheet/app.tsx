@@ -48,8 +48,11 @@ export default function Home() {
   const now = new Date();
   const [employee, setEmployee] = useState("");
   const [recipient, setRecipient] = useState("");
-  const [month, setMonth] = useState(`${now.getFullYear()}-${pad(now.getMonth() + 1)}`);
-  const [period, setPeriod] = useState<"first" | "second">(now.getDate() <= 15 ? "first" : "second");
+  const completedPeriodDate = now.getDate() <= 15
+    ? new Date(now.getFullYear(), now.getMonth() - 1, 16)
+    : new Date(now.getFullYear(), now.getMonth(), 1);
+  const [month, setMonth] = useState(`${completedPeriodDate.getFullYear()}-${pad(completedPeriodDate.getMonth() + 1)}`);
+  const [period, setPeriod] = useState<"first" | "second">(now.getDate() <= 15 ? "second" : "first");
   const [defaultStart, setDefaultStart] = useState("10:00");
   const [defaultEnd, setDefaultEnd] = useState("17:00");
   const [entries, setEntries] = useState<Entries>({});
