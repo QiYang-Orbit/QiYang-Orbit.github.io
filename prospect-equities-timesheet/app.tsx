@@ -161,10 +161,17 @@ export default function Home() {
     w.document.close();
   };
 
+  const [emailPrepared, setEmailPrepared] = useState(false);
+  const [copyStatus, setCopyStatus] = useState("");
+  const emailSubject = `${employee} Timesheet – ${periodText}`;
+  const emailBody = `Hello,\n\nPlease find attached my completed timesheet for ${periodText}.\n\nTotal hours: ${hoursLabel(totalHours)}\n\nThank you,\n${employee}`;
+  const copyEmail = async (value: string) => {
+    try { await navigator.clipboard.writeText(value); setCopyStatus("Copied."); }
+    catch { setCopyStatus("Please select the text below and copy it manually."); }
+  };
   const prepareEmail = () => {
-    const subject = `${employee} Timesheet – ${periodText}`;
-    const body = `Hello,\n\nPlease find attached my completed timesheet for ${periodText}.\n\nTotal hours: ${hoursLabel(totalHours)}\n\nThank you,\n${employee}`;
-    window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setEmailPrepared(true);
+    window.open("https://webmail.emailsrvr.com/", "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -219,9 +226,17 @@ export default function Home() {
       </section>
 
       <section className="actions card">
-        <div><p className="eyebrow">READY TO SUBMIT</p><h2>Review once. Send when you’re ready.</h2><p>Download the report first, then open a prepared email and attach the file. Nothing is sent automatically.</p></div>
-        <div className="actionButtons"><button className="secondary" onClick={downloadCsv} disabled={!selected.length || !employee.trim()}>Download spreadsheet</button><button className="secondary" onClick={printPdf} disabled={!selected.length || !employee.trim()}>Print / Save PDF</button><button className="primary" onClick={prepareEmail} disabled={!selected.length || !employee.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)}>Prepare email →</button></div>
+        <div><p className="eyebrow">READY TO SUBMIT</p><h2>Review once. Send when you’re ready.</h2><p>Download your report, then open company Webmail. Copy the recipient, subject, and message below into a new email and attach your report. Nothing is sent automatically.</p></div>
+        <div className="actionButtons"><button className="secondary" onClick={downloadCsv} disabled={!selected.length || !employee.trim()}>Download spreadsheet</button><button className="secondary" onClick={printPdf} disabled={!selected.length || !employee.trim()}>Print / Save PDF</button><button className="primary" onClick={prepareEmail} disabled={!selected.length || !employee.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)}>Open company Webmail →</button></div>
       </section>
+      {emailPrepared && <section className="card emailDraft" aria-label="Email draft">
+        <h2>Your email draft</h2>
+        <p>Compose a new message in company Webmail. If it did not open, <a href="https://webmail.emailsrvr.com/" target="_blank" rel="noopener noreferrer">open Webmail here</a>.</p>
+        <label>To<input readOnly value={recipient} /></label><button className="secondary" onClick={() => copyEmail(recipient)}>Copy recipient</button>
+        <label>Subject<input readOnly value={emailSubject} /></label><button className="secondary" onClick={() => copyEmail(emailSubject)}>Copy subject</button>
+        <label>Message<textarea readOnly rows={9} value={emailBody} /></label><button className="secondary" onClick={() => copyEmail(emailBody)}>Copy message</button>
+        <p role="status">{copyStatus}</p><p>Remember to attach your downloaded timesheet before sending.</p>
+      </section>}
     </main>
   );
 }

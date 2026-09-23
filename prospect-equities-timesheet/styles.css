@@ -36,3 +36,5 @@ h2{font-family:Georgia,serif;font-size:25px;letter-spacing:-.02em;margin:0}
 .calendarGrid.noOffset:before{display:none}
 
 .periodChoices{display:flex;gap:12px;margin:0 0 18px;flex-wrap:wrap}.periodChoice{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink)}.periodChoice span{font-size:13px}.periodChoice.selected{background:var(--green);color:white;border-color:var(--green)}.periodChoice:focus-visible{outline:3px solid var(--orange);outline-offset:3px}@media(max-width:620px){.periodChoice{flex:1;padding:12px}}
+
+.emailDraft{margin-top:20px;padding:24px}.emailDraft label{display:block;margin:18px 0 8px}.emailDraft textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid var(--line);border-radius:11px;font:inherit;font-size:14px;line-height:1.5}.emailDraft p{font-size:14px;color:var(--muted)}.emailDraft a{color:var(--green)}
