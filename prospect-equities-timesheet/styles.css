@@ -34,3 +34,5 @@ h2{font-family:Georgia,serif;font-size:25px;letter-spacing:-.02em;margin:0}
 @media(max-width:620px){main{padding:28px 14px 48px}.hero{display:block}.totalCard{margin-top:22px;width:150px}.settings{grid-template-columns:1fr 1fr}.calendarPanel,.entriesPanel,.actions{padding:17px}.sectionHead{align-items:flex-start;flex-direction:column}.weekLabels,.calendarGrid{gap:5px}.day{border-radius:10px}.entry{grid-template-columns:1fr 1fr}.entry>div{grid-column:1/-1}.remove{position:absolute;right:28px}.actionButtons{display:grid;width:100%}.actionButtons button{width:100%}}
 
 .calendarGrid.noOffset:before{display:none}
+
+.periodChoices{display:flex;gap:12px;margin:0 0 18px;flex-wrap:wrap}.periodChoice{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink)}.periodChoice span{font-size:13px}.periodChoice.selected{background:var(--green);color:white;border-color:var(--green)}.periodChoice:focus-visible{outline:3px solid var(--orange);outline-offset:3px}@media(max-width:620px){.periodChoice{flex:1;padding:12px}}

@@ -53,6 +53,10 @@ export default function Home() {
     : new Date(now.getFullYear(), now.getMonth(), 1);
   const [month, setMonth] = useState(`${completedPeriodDate.getFullYear()}-${pad(completedPeriodDate.getMonth() + 1)}`);
   const [period, setPeriod] = useState<"first" | "second">(now.getDate() <= 15 ? "second" : "first");
+  const periodChoices = [
+    { label: "Previous period", date: completedPeriodDate, half: (now.getDate() <= 15 ? "second" : "first") as "first" | "second" },
+    { label: "Current period", date: now, half: (now.getDate() <= 15 ? "first" : "second") as "first" | "second" },
+  ];
   const [defaultStart, setDefaultStart] = useState("10:00");
   const [defaultEnd, setDefaultEnd] = useState("17:00");
   const [entries, setEntries] = useState<Entries>({});
@@ -174,6 +178,15 @@ export default function Home() {
         <div className="totalCard"><span>Period total</span><strong>{hoursLabel(totalHours)}</strong><small>hours</small></div>
       </header>
 
+      <nav className="periodChoices" aria-label="Quick pay period selection">
+        {periodChoices.map(({ label, date, half }) => {
+          const value = `${date.getFullYear()}-${pad(date.getMonth() + 1)}`;
+          const end = half === "first" ? 15 : new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+          const dateLabel = `${date.toLocaleDateString("en-US", { month: "short" })} ${half === "first" ? 1 : 16}–${end}, ${date.getFullYear()}`;
+          const active = month === value && period === half;
+          return <button key={label} type="button" aria-pressed={active} className={active ? "periodChoice selected" : "periodChoice"} onClick={() => { setMonth(value); setPeriod(half); }}><strong>{label}</strong><span>{dateLabel}</span></button>;
+        })}
+      </nav>
       <section className="settings card" aria-label="Timesheet settings">
         <label>Employee name<input autoComplete="name" placeholder="Your name" value={employee} onChange={(e) => setEmployee(e.target.value)} /></label>
         <label>Month<input type="month" value={month} onChange={(e) => setMonth(e.target.value)} /></label>
