@@ -1,3 +1,4 @@
+import { makeWord, makePdf } from "./report";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
@@ -122,43 +123,23 @@ export default function Home() {
     setEntries(next);
   };
 
-  const csvContent = () => {
-    const rows: string[][] = [
-      ["Prospect Equities Timesheet-Absence Report"],
-      ["Employee Name", employee],
-      ["Pay Period", periodText],
-      ["Total Hours Worked", hoursLabel(totalHours)],
-      [],
-      ["Date", "Start Time", "End Time", "Total Hours", "Week of"],
-      ...selected.map((key) => [prettyDate(key), timeLabel(entries[key].start), timeLabel(entries[key].end), hoursLabel(hoursBetween(entries[key].start, entries[key].end)), prettyDate(startOfWeek(key))]),
-      [],
-      ...Object.entries(weeklyTotals).map(([week, hours]) => [`Weekly Total (${prettyDate(week)})`, "", "", hoursLabel(hours)]),
-      [],
-      ["Employee Signature", employee],
-      ["Date", new Date().toLocaleDateString("en-US")],
-    ];
-    return rows.map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(",")).join("\r\n");
-  };
-
-  const downloadCsv = () => {
-    const blob = new Blob(["\ufeff" + csvContent()], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${employee.replace(/\s+/g, "_")}_Timesheet_${month}_${period}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const printPdf = () => {
-    const safeEmployee = employee.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]!));
-    const rows = selected.map((key) => `<tr><td>${prettyDate(key)}</td><td>${timeLabel(entries[key].start)}</td><td>${timeLabel(entries[key].end)}</td><td>${hoursLabel(hoursBetween(entries[key].start, entries[key].end))}</td></tr>`).join("");
-    const weeks = Object.entries(weeklyTotals).map(([week, hours]) => `<div class="total"><span>Weekly Total — week of ${prettyDate(week)}</span><strong>${hoursLabel(hours)}</strong></div>`).join("");
-    const w = window.open("", "_blank");
-    if (!w) return;
-    w.opener = null;
-    w.document.write(`<!doctype html><html><head><title>${safeEmployee} Timesheet</title><style>body{font-family:Arial,sans-serif;color:#111;margin:42px}h1{font-size:22px;margin:0 0 4px}.sub{color:#555;margin-bottom:26px}.meta{display:grid;grid-template-columns:180px 1fr;gap:8px;margin-bottom:24px}.meta strong{font-weight:700}table{width:100%;border-collapse:collapse;margin:16px 0}th,td{border:1px solid #aaa;padding:10px;text-align:left}th{background:#eee}.total{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ddd}.grand{font-size:18px;margin-top:18px;padding-top:12px;border-top:2px solid #111;display:flex;justify-content:space-between}.sign{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:60px}.line{border-top:1px solid #222;padding-top:7px}@media print{button{display:none}}</style></head><body><h1>Prospect Equities</h1><div class="sub">Timesheet-Absence Report</div><div class="meta"><strong>Employee Name</strong><span>${safeEmployee}</span><strong>Pay Period</strong><span>${periodText}</span></div><table><thead><tr><th>Date</th><th>Start Time</th><th>End Time</th><th>Total Hours</th></tr></thead><tbody>${rows || '<tr><td colspan="4">No work days selected</td></tr>'}</tbody></table>${weeks}<div class="grand"><strong>Total Hours Worked</strong><strong>${hoursLabel(totalHours)}</strong></div><div class="sign"><div class="line">Employee Signature: ${safeEmployee}</div><div class="line">Date: ${new Date().toLocaleDateString("en-US")}</div></div><script>window.onload=()=>window.print()<\/script></body></html>`);
-    w.document.close();
+  const [downloadStatus, setDownloadStatus] = useState("");
+  const [downloading, setDownloading] = useState(false);
+  const downloadReport = async (format: "docx" | "pdf") => {
+    setDownloading(true); setDownloadStatus("Preparing your report…");
+    try {
+      const response = await fetch(`./report-template.${format}`);
+      if (!response.ok) throw new Error("Template unavailable");
+      const data = { employee, date: iso(new Date()), rows: selected.map(date => ({ date, start: entries[date].start, end: entries[date].end })) };
+      const template = await response.arrayBuffer();
+      const bytes = await (format === "docx" ? makeWord(template, data) : makePdf(template, data));
+      const blob = new Blob([bytes], { type: format === "docx" ? "application/vnd.openxmlformats-officedocument.wordprocessingml.document" : "application/pdf" });
+      const url = URL.createObjectURL(blob); const link = document.createElement("a");
+      link.href = url; link.download = `${employee.replace(/[^\p{L}\p{N}_-]+/gu, "_")}_Prospect_Equities_Timesheet_${month}_${period}.${format}`;
+      link.click(); setTimeout(() => URL.revokeObjectURL(url), 30000);
+      setDownloadStatus("Report downloaded using the company template.");
+    } catch { setDownloadStatus("The report could not be downloaded. Please try again."); }
+    finally { setDownloading(false); }
   };
 
   const [emailPrepared, setEmailPrepared] = useState(false);
@@ -227,8 +208,9 @@ export default function Home() {
 
       <section className="actions card">
         <div><p className="eyebrow">READY TO SUBMIT</p><h2>Review once. Send when you’re ready.</h2><p>Download your report, then open company Webmail. Copy the recipient, subject, and message below into a new email and attach your report. Nothing is sent automatically.</p></div>
-        <div className="actionButtons"><button className="secondary" onClick={downloadCsv} disabled={!selected.length || !employee.trim()}>Download spreadsheet</button><button className="secondary" onClick={printPdf} disabled={!selected.length || !employee.trim()}>Print / Save PDF</button><button className="primary" onClick={prepareEmail} disabled={!selected.length || !employee.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)}>Open company Webmail →</button></div>
+        <div className="actionButtons"><button className="secondary" onClick={() => downloadReport("docx")} disabled={downloading || !selected.length || !employee.trim()}>Download Word</button><button className="secondary" onClick={() => downloadReport("pdf")} disabled={downloading || !selected.length || !employee.trim()}>Download PDF</button><button className="primary" onClick={prepareEmail} disabled={!selected.length || !employee.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)}>Open company Webmail →</button></div>
       </section>
+      <p role="status" className="privacy">{downloadStatus}</p>
       {emailPrepared && <section className="card emailDraft" aria-label="Email draft">
         <h2>Your email draft</h2>
         <p>Compose a new message in company Webmail. If it did not open, <a href="https://webmail.emailsrvr.com/" target="_blank" rel="noopener noreferrer">open Webmail here</a>.</p>
