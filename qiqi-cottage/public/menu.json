@@ -1,0 +1,194 @@
+[
+  {
+    "id": "drink-rice-milk",
+    "name": {
+      "zh": "酒酿冰奶",
+      "en": "Sweet Rice Iced Milk"
+    },
+    "description": {
+      "zh": "酒酿、冰牛奶。",
+      "en": "Sweet fermented rice and chilled milk."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/rice-milk.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 0
+  },
+  {
+    "id": "drink-soymilk",
+    "name": {
+      "zh": "开心甜甜暖暖豆浆",
+      "en": "Happy Cozy Soy Milk"
+    },
+    "description": {
+      "zh": "QiQi神秘配方",
+      "en": "QiQi's secret recipe."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/soymilk.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "drink-nola",
+    "name": {
+      "zh": "The Blue Bottle Nola（限定）",
+      "en": "The Blue Bottle Nola (Limited)"
+    },
+    "description": {
+      "zh": "nola冷萃咖啡液＋香香牛奶",
+      "en": "Nola cold-brew concentrate + fragrant milk."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/nola.png",
+    "active": true,
+    "iceOptions": true,
+    "sortOrder": 2
+  },
+  {
+    "id": "drink-coconut-matcha",
+    "name": {
+      "zh": "开心椰抹茶拿铁",
+      "en": "Happy Coconut Matcha Latte"
+    },
+    "description": {
+      "zh": "粉色椰子水+QiQi精选的茶道级抹茶粉粉",
+      "en": "Pink coconut water + QiQi's handpicked ceremonial-grade matcha."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/coconut-matcha.png",
+    "active": true,
+    "iceOptions": true,
+    "sortOrder": 3
+  },
+  {
+    "id": "drink-pistachio-matcha",
+    "name": {
+      "zh": "开心果酱抹茶拿铁（限定）",
+      "en": "Pistachio Matcha Latte (Limited)"
+    },
+    "description": {
+      "zh": "开心果酱（QiQi自己做超健康又好吃）+QiQi精选的茶道级抹茶粉粉",
+      "en": "Pistachio spread (homemade by QiQi, wholesome and delicious) + QiQi's handpicked ceremonial-grade matcha."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/pistachio-matcha.png",
+    "active": true,
+    "iceOptions": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "drink-all-matcha",
+    "name": {
+      "zh": "我全都要抹茶拿铁（限定）",
+      "en": "All-in Matcha Latte (Limited)"
+    },
+    "description": {
+      "zh": "开心果酱（QiQi自己做超健康又好吃）+粉色椰子水+QiQi精选的茶道级抹茶粉粉，都要",
+      "en": "Pistachio spread (homemade by QiQi, wholesome and delicious), pink coconut water, and QiQi's handpicked ceremonial-grade matcha. All of it!"
+    },
+    "category": "drinks",
+    "image": "assets/drinks/all-matcha.png",
+    "active": true,
+    "iceOptions": true,
+    "sortOrder": 5
+  },
+  {
+    "id": "drink-warm-water",
+    "name": {
+      "zh": "喝温暖的白开水",
+      "en": "A Comforting Cup of Warm Water"
+    },
+    "description": {
+      "zh": "清清爽爽好喝水水",
+      "en": "Fresh, simple, lovely water."
+    },
+    "category": "drinks",
+    "image": "assets/drinks/warm-water.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 6
+  },
+  {
+    "id": "dessert-cheesecake",
+    "name": {
+      "zh": "芝士小蛋糕",
+      "en": "Little Cheesecake"
+    },
+    "description": {
+      "zh": "芝士就是力量！\nQiQi不会做甜点，这其实是她买来的",
+      "en": "Cheese is power!\nQiQi doesn't bake desserts. She bought this one."
+    },
+    "category": "desserts",
+    "image": "assets/foods/cheesecake.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 10
+  },
+  {
+    "id": "sample-noodle",
+    "name": {
+      "zh": "葱油拌面（限定）",
+      "en": "Scallion Oil Noodles (Limited)"
+    },
+    "description": {
+      "zh": "葱油、酱油拌面。",
+      "en": "Scallion oil and soy sauce noodles."
+    },
+    "category": "meals",
+    "image": "assets/foods/scallion-noodles.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 20
+  },
+  {
+    "id": "meal-scallion-pork",
+    "name": {
+      "zh": "葱烧大排（超级限定，看QiQi心情）",
+      "en": "Scallion-Braised Pork Chops (Super Limited — QiQi's Mood)"
+    },
+    "description": {
+      "zh": "",
+      "en": ""
+    },
+    "category": "meals",
+    "image": "assets/foods/scallion-pork.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 21
+  },
+  {
+    "id": "meal-chicken-wings",
+    "name": {
+      "zh": "香喷喷烤鸡翅",
+      "en": "Fragrant Roasted Chicken Wings"
+    },
+    "description": {
+      "zh": "好好吃！",
+      "en": "So, so delicious!"
+    },
+    "category": "meals",
+    "image": "assets/foods/chicken-wings.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 22
+  },
+  {
+    "id": "meal-korean-short-ribs-no-scallion",
+    "name": {
+      "zh": "韩式煎牛仔骨",
+      "en": "Korean Pan-Seared Short Ribs"
+    },
+    "description": {
+      "zh": "罪恶但太好吃",
+      "en": "A little indulgent. Far too delicious."
+    },
+    "category": "meals",
+    "image": "assets/foods/korean-short-ribs-no-scallion.png",
+    "active": true,
+    "iceOptions": false,
+    "sortOrder": 23
+  }
+]

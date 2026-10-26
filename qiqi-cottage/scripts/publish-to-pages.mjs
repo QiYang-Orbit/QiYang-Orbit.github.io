@@ -1,0 +1,12 @@
+import {cp,mkdir,readFile,writeFile,access} from 'node:fs/promises';
+import {resolve,basename} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const target=process.argv[2];if(!target)throw Error('Pass the absolute target directory inside your repository.');
+const destination=resolve(target);if(basename(destination)!=='qiqi-cottage')throw Error('The target directory must be named qiqi-cottage.');
+await mkdir(destination,{recursive:true});
+for(const name of ['src','public','scripts','tests','migrations'])await cp(resolve(root,name),resolve(destination,name),{recursive:true});
+for(const name of ['package.json','.env.example','.gitignore','README.md','wrangler.jsonc','seed.sql'])await cp(resolve(root,name),resolve(destination,name));
+const source=await readFile(resolve(root,'public/index.html'),'utf8');
+await writeFile(resolve(destination,'index.html'),source.replace('<head>','<head>\n<base href="./public/">'));
+console.log('Prepared the GitHub Pages entry and portable source. Private environment files and databases were excluded.');

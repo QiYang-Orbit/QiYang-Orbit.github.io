@@ -1,0 +1,17 @@
+{
+  "name": "QiQi的小屋",
+  "short_name": "QiQi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff0f7",
+  "theme_color": "#fff0f7",
+  "icons": [
+    {
+      "src": "assets/cottage-icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
